@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-flex-height
+  labels:
+    app: test-flex-height
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-flex-height
+  template:
+    spec:
+      containers:
+      - name: test-flex-height
+        image: me-west1-docker.pkg.dev/koala-ops-demo-373407/koala-repo/test-flex-height:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: test-flex-height-configmap
+    metadata:
+      labels:
+        app: test-flex-height
